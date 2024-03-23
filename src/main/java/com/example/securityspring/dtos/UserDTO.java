@@ -1,4 +1,4 @@
-package com.example.securityspring;
+package com.example.securityspring.dtos;
 
 import lombok.*;
 
@@ -8,6 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class UserDTO {
-    private String id;
-    private String pwd;
+    private String username;
+    private String password;
 }
