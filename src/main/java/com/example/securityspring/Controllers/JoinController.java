@@ -4,6 +4,7 @@ import com.example.securityspring.Services.JoinService;
 import com.example.securityspring.dtos.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -19,12 +20,14 @@ public class JoinController {
     }
 
     @PostMapping("/joinProc")
-    public String joinProcess(UserDTO user){
+    public String joinProcess(UserDTO user, Model m){
 
         System.out.println(user);
         System.out.println(user.getUsername());
-        joinService.joinProcess(user);
 
-        return "redirect:/login";
+        if(joinService.joinProcess(user, m)==0)
+            return "join";
+        else
+            return "redirect:/login";
     }
 }

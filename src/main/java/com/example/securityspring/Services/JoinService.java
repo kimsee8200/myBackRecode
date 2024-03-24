@@ -6,6 +6,7 @@ import com.example.securityspring.dtos.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 @Service
 public class JoinService {
@@ -16,11 +17,12 @@ public class JoinService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public void joinProcess(UserDTO user){
+    public int joinProcess(UserDTO user, Model m){
 
         //db에 동일한 username이 있는지 확인.
         if(userRepository.existsByUsername(user.getUsername())){
-            return;
+            m.addAttribute("message","이미 동일한 id가 있습니다.");
+            return 0;
         }
 
         UserEntity date = new UserEntity();
@@ -30,5 +32,6 @@ public class JoinService {
         date.setRole("ROLE_ADMIN");
 
         userRepository.save(date);
+        return 1;
     }
 }

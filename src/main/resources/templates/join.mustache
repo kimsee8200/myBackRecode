@@ -9,6 +9,9 @@
 <body>
 join page
 <hr>
+    {{#message}}
+        <p class="error" style="color: red">{{message}}</p>
+    {{/message}}
 <form action="/joinProc" method="post" name="joinForm">
     <input type="text" name="username" placeholder="Username"/>
     <input type="password" name="password" placeholder="Password"/>
