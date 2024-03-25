@@ -2,6 +2,9 @@ package com.example.securityspring.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,20 +31,21 @@ public class SecurityConfig {
                         .anyRequest().authenticated() // 로그인 한 모든 유저 접근 가능.
                 );
 
-        // 커스텀 로그인.
+        // 커스텀 로그인. (http basic방식)
         http
-                .formLogin((auth) -> auth.loginPage("/login")
-                        .loginProcessingUrl("/loginProc")
-                        .permitAll()
-                );
-
+                .httpBasic(Customizer.withDefaults());
+        // formlogin 방식.
+//        http
+//                .formLogin((auth) -> auth.loginPage("/login")
+//                        .loginProcessingUrl("/loginProc")
+//                        .permitAll());
         http
                 .logout((auth)->auth
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
                 );
         // 개발환경에서는 disable. -> 자동으로 enable이 됨.
-        // 배포하려면, 설정해야한다.
+        // 배포하려면, csrf 토큰 등을 설정해야한다.
 //        http
 //                .csrf((auth) -> auth.disable());
 
